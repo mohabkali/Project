@@ -3,6 +3,8 @@ package com.qaproject.Cookbook.controller;
 import com.qaproject.Cookbook.entity.Recipe;
 import com.qaproject.Cookbook.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -20,26 +22,27 @@ public class RecipeController {
     }
 
     @PostMapping("/newRecipe")
-    public Recipe addRecipe(@RequestBody Recipe recipe) {
+    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
         ;
-        return service.addRecipe(recipe);
+        return new ResponseEntity<>(service.addRecipe(recipe), HttpStatus.CREATED);
     }
 
     @GetMapping("/getRecipes")
-    public List<Recipe> getAllRecipes() {
-        return this.service.getAllRecipes();
+    public ResponseEntity<List<Recipe>> getAllRecipes() {
+        return ResponseEntity.ok(this.service.getAllRecipes());
     }
 
     @PutMapping("/updateRecipe")
-    public Recipe updateRecipe(@PathParam("id") long id, @RequestBody Recipe recipe) {
-        return this.service.updateRecipe(id, recipe);
+    public ResponseEntity<Recipe> updateRecipe(@PathParam("id") long id, @RequestBody Recipe recipe) {
+        return new ResponseEntity<>(this.service.updateRecipe(id, recipe),HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/deleteRecipe/{id}")
-    public boolean removeRecipe(@PathVariable long id) {
-        return this.service.removeRecipe(id);
+    public ResponseEntity<Recipe> removeRecipe(@PathVariable long id) {
+        return this.service.removeRecipe(id)
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 
     @GetMapping("/readByChefName/{chefName}")
     public List<Recipe> readChefName(@PathVariable String chefName) {

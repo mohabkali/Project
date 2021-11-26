@@ -1,0 +1,1 @@
+INSERT INTO recipe(id,recipe_name, cuisine, category_type,ingredients,method,chef_name) VALUES(1,"Samosas", "Indian","Starter","Fillings and Dough","Fry Samosa","GordonRamsey");

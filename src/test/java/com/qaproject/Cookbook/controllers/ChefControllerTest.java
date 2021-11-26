@@ -47,7 +47,7 @@ public class ChefControllerTest {
 
     @Test
     public void testUpdateChef() throws Exception {
-        Chef testChef = new Chef(1,"Gordon","All");
+        Chef testChef = new Chef(1,"Mohab","All");
 
         MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.PUT, "/updateChef?id=1");
         mockRequest.contentType(MediaType.APPLICATION_JSON);
